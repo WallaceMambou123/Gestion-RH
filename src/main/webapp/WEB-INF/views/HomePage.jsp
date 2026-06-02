@@ -7,10 +7,22 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head>
+    <title>Page Accueil</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/HomePage.css">
+</head>
+<body>
+<%--    La navbar --%>
+    <nav>
+        <span>LOGO</span>
+        <ul>
+            <li>Fonctionnalites</li>
+            <li>A propos</li>
+            <li>Contact</li>
+        </ul>
+        <button>Se Connecter</button>
+    </nav>
+<%-- Le corps--%>
+
+</body>
 </html>

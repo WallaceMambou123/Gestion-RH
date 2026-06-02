@@ -1,0 +1,397 @@
+/* =====================================================
+   RH Manager — Auth CSS (Connexion + Inscription)
+   Fichier : src/main/webapp/css/connexion.css
+   ===================================================== */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --blue-dark:  #0C447C;
+    --blue-main:  #185FA5;
+    --blue-light: #E6F1FB;
+    --text-pri:   #111827;
+    --text-sec:   #6B7280;
+    --text-ter:   #9CA3AF;
+    --border:     #E5E7EB;
+    --bg:         #F3F4F6;
+    --white:      #FFFFFF;
+    --radius:     8px;
+    --radius-lg:  12px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ===== CONTENEUR PRINCIPAL ===== */
+.contenair {
+    display: flex;
+    width: 920px;
+    min-height: 560px;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+}
+
+/* ===== COTE GAUCHE — IMAGE ===== */
+.cote1 {
+    width: 45%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.cote1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Overlay sombre sur l'image */
+.cote1-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+            to bottom,
+            rgba(12, 68, 124, 0.75) 0%,
+            rgba(12, 68, 124, 0.88) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 28px 28px 32px;
+}
+
+.overlay-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-icon {
+    width: 34px;
+    height: 34px;
+    background: rgba(255,255,255,0.15);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+}
+
+.brand-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.overlay-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+.overlay-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.35;
+    margin-bottom: 10px;
+}
+
+.overlay-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.overlay-features { display: flex; flex-direction: column; gap: 10px; }
+
+.overlay-feat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.80);
+}
+
+.overlay-feat i {
+    width: 18px;
+    height: 18px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+/* ===== COTE DROIT — FORMULAIRE ===== */
+.cote2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 36px 40px;
+    overflow-y: auto;
+}
+
+/* ===== HEADER DU FORMULAIRE ===== */
+.form-header {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.form-logo {
+    width: 48px;
+    height: 48px;
+    background: var(--blue-light);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue-main);
+    font-size: 24px;
+    margin: 0 auto 12px;
+}
+
+.form-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-pri);
+    margin-bottom: 4px;
+}
+
+.form-sub {
+    font-size: 13px;
+    color: var(--text-sec);
+}
+
+/* ===== ALERTES ===== */
+.alert {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.alert i { font-size: 16px; flex-shrink: 0; }
+
+.alert-error {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #991B1B;
+}
+
+.alert-success {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    color: #166534;
+}
+
+/* ===== GROUPES DE CHAMPS ===== */
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-pri);
+    margin-bottom: 5px;
+}
+
+.input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 11px;
+    color: var(--text-ter);
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 12px 10px 36px;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--text-pri);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    appearance: none;
+}
+
+.form-input:focus {
+    border-color: var(--blue-main);
+    box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.12);
+}
+
+.form-input::placeholder { color: var(--text-ter); }
+
+/* Select */
+.form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+/* Bouton afficher/masquer mot de passe */
+.eye-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-ter);
+    font-size: 16px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+}
+.eye-btn:hover { color: var(--text-sec); }
+
+/* Deux champs côte à côte */
+.form-row-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* ===== OPTIONS (se souvenir + oublié) ===== */
+.form-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text-sec);
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    accent-color: var(--blue-main);
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.cgu { margin-bottom: 16px; }
+
+.forgot-link {
+    font-size: 12px;
+    color: var(--blue-main);
+    text-decoration: none;
+}
+.forgot-link:hover { text-decoration: underline; }
+
+/* ===== INDICATEUR FORCE MOT DE PASSE ===== */
+.pwd-strength {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.strength-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 4px;
+    transition: width 0.3s, background 0.3s;
+}
+
+.strength-label {
+    font-size: 11px;
+    color: var(--text-ter);
+    white-space: nowrap;
+}
+
+/* ===== BOUTON SOUMETTRE ===== */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    background: var(--blue-dark);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.15s;
+    margin-bottom: 16px;
+}
+
+.btn-submit:hover { background: var(--blue-main); }
+.btn-submit i { font-size: 16px; }
+
+/* ===== PIED DU FORMULAIRE ===== */
+.form-footer {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-sec);
+}
+
+.form-link {
+    color: var(--blue-main);
+    font-weight: 500;
+    text-decoration: none;
+}
+.form-link:hover { text-decoration: underline; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+    .contenair {
+        flex-direction: column;
+        width: 100%;
+        min-height: unset;
+    }
+    .cote1 {
+        width: 100%;
+        height: 160px;
+    }
+    .cote2 { padding: 28px 20px; }
+    .form-row-double { grid-template-columns: 1fr; }
+}

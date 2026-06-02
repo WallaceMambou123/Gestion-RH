@@ -7,10 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head>
+    <title>Title</title>
+</head>
+<body>
+    <p>Bonjour la team</p>
+    <a href="${pageContext.request.contextPath}/landing">On demarre</a>
+</body>
 </html>

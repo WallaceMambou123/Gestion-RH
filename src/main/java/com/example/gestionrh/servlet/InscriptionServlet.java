@@ -5,74 +5,48 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import com.example.gestionrh.model.Utilisateur;
+import com.example.gestionrh.service.AuthService;
 
 import java.io.IOException;
 
 @WebServlet("/inscription")
 public class InscriptionServlet extends HttpServlet {
+    private final AuthService authService = new AuthService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Afficher la page d'inscription
-        request.getRequestDispatcher("/WEB-INF/views/InscriptionPage.jsp")
-                .forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/InscriptionPage.jsp").forward(request, response);
     }
 
-
-}
-
-/*
-*  @Override
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Récupération des champs du formulaire
-        String nom      = request.getParameter("nom");
-        String prenom   = request.getParameter("prenom");
+        
+        String nom = request.getParameter("nom");
+        String prenom = request.getParameter("prenom");
         String username = request.getParameter("username");
-        String email    = request.getParameter("email");
-        String role     = request.getParameter("role");
-        String mdp      = request.getParameter("mdp");
-        String mdp2     = request.getParameter("mdp2");
+        String email = request.getParameter("email");
+        String mdp = request.getParameter("mdp");
+        String roleStr = request.getParameter("role");
 
-        // ===== VALIDATION =====
-        if (nom == null || nom.trim().isEmpty() ||
-                prenom == null || prenom.trim().isEmpty() ||
-                username == null || username.trim().isEmpty() ||
-                email == null || email.trim().isEmpty() ||
-                mdp == null || mdp.trim().isEmpty()) {
+        try {
+            Utilisateur newUser = Utilisateur.builder()
+                    .nom(nom)
+                    .prenom(prenom)
+                    .username(username)
+                    .email(email)
+                    .password(mdp)
+                    .role(Utilisateur.Role.valueOf(roleStr))
+                    .actif(true)
+                    .build();
 
-            request.setAttribute("error", "Veuillez remplir tous les champs obligatoires.");
-            request.getRequestDispatcher("/WEB-INF/views/InscriptionPage.jsp")
-                    .forward(request, response);
-            return;
+            authService.register(newUser);
+            response.sendRedirect(request.getContextPath() + "/connexion?registered=1");
+        } catch (Exception e) {
+            request.setAttribute("error", "Erreur lors de l'inscription : " + e.getMessage());
+            request.getRequestDispatcher("/WEB-INF/views/InscriptionPage.jsp").forward(request, response);
         }
-
-        if (!mdp.equals(mdp2)) {
-            request.setAttribute("error", "Les mots de passe ne correspondent pas.");
-            request.getRequestDispatcher("/WEB-INF/views/InscriptionPage.jsp")
-                    .forward(request, response);
-            return;
-        }
-
-        if (mdp.length() < 6) {
-            request.setAttribute("error", "Le mot de passe doit contenir au moins 6 caractères.");
-            request.getRequestDispatcher("/WEB-INF/views/InscriptionPage.jsp")
-                    .forward(request, response);
-            return;
-        }
-
-        // ===== HACHAGE DU MOT DE PASSE AVEC BCRYPT =====
-        // TODO : ajouter jBCrypt dans pom.xml
-        // String hashedPassword = BCrypt.hashpw(mdp, BCrypt.gensalt());
-
-        // ===== SAUVEGARDE EN BASE =====
-        // TODO : appeler UtilisateurDAO.save(nom, prenom, username, email, role, hashedPassword)
-
-        System.out.println("Nouvel utilisateur : " + username + " / " + email + " / rôle : " + role);
-
-        // ===== REDIRECTION VERS CONNEXION avec message succès =====
-        response.sendRedirect(request.getContextPath() + "/connexion?registered=1");
     }
-* */
+}

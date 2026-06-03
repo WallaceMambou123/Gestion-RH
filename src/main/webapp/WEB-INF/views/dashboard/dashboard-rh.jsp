@@ -1,4 +1,4 @@
-<jsp:include page="/WEB-INF/views/layout/header.jsp">
+o<jsp:include page="/WEB-INF/views/layout/header.jsp">
     <jsp:param name="title" value="Tableau de Bord RH" />
 </jsp:include>
 <jsp:include page="/WEB-INF/views/layout/sidebar.jsp" />

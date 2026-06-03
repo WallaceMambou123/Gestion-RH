@@ -62,9 +62,22 @@ public class CongeServlet extends HttpServlet {
             String type = request.getParameter("typeConge");
             String motif = request.getParameter("motif");
             
-            // On suppose que l'utilisateur est lié à un employe (Stocké en session ou via repository)
-            // Pour le TP, on prend l'employeId du formulaire ou de la session
-            Long employeId = Long.parseLong(request.getParameter("employeId"));
+            // On suppose que l'utilisateur est lié à un employe.
+            // Si le champ employeId est vide, on le récupère via l'utilisateur connecté.
+            Long employeId = null;
+            String employeIdParam = request.getParameter("employeId");
+            if (employeIdParam != null && !employeIdParam.isBlank()) {
+                employeId = Long.parseLong(employeIdParam);
+            } else if (user != null) {
+                Optional<Employe> employeOpt = employeRepository.findByUtilisateurId(user.getId());
+                if (employeOpt.isPresent()) {
+                    employeId = employeOpt.get().getId();
+                }
+            }
+            if (employeId == null) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Employé introuvable pour la demande de congé.");
+                return;
+            }
             
             Conge c = Conge.builder()
                     .employe(Employe.builder().id(employeId).build())

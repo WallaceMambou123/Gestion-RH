@@ -17,14 +17,14 @@
             <!-- Stats Cards -->
             <div class="col-md-6">
                 <div class="card stat-card p-4">
-                    <small class="text-muted text-uppercase fw-bold">Solde Congés</small>
+                    <small class="text-muted text-uppercase fw-bold">Solde Conges</small>
                     <h2 class="fw-bold mt-2 text-primary">${disponibleConge != null ? disponibleConge : 25} Jours</h2>
-                    <small class="text-muted">A prendre sur l'année en cours</small>
+                    <small class="text-muted">A prendre sur l'annee en cours</small>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card stat-card p-4" style="border-left-color: #10b981;">
-                    <small class="text-muted text-uppercase fw-bold">Dernière Fiche de Paie</small>
+                    <small class="text-muted text-uppercase fw-bold">Derniere Fiche de Paie</small>
                     <h2 class="fw-bold mt-2 text-success">Disponible</h2>
                     <small class="text-muted">Mois de Mai</small>
                 </div>

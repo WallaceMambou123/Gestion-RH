@@ -5,7 +5,7 @@
 
 <main class="main-content flex-grow-1">
     <div class="topbar border-bottom mb-4">
-        <h5 class="fw-bold text-secondary">Validation de la Demande de Congé</h5>
+        <h5 class="fw-bold text-secondary">Validation de la Demande de Conge</h5>
     </div>
 
     <div class="container-fluid">
@@ -62,7 +62,7 @@
 
                         <div class="d-flex gap-2 justify-content-end mt-4">
                             <a href="${pageContext.request.contextPath}/conge" class="btn btn-light border">Annuler</a>
-                            <button type="submit" class="btn btn-primary px-4">Enregistrer la décision</button>
+                            <button type="submit" class="btn btn-primary px-4">Enregistrer la decision</button>
                         </div>
                     </form>
                 </div>

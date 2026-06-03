@@ -7,7 +7,7 @@
     <div class="topbar d-flex justify-content-between align-items-center">
         <h5 class="m-0 fw-bold text-secondary">
             <c:choose>
-                <c:when test="${param.action == 'my'}">Mes Demandes de Congés</c:when>
+                <c:when test="${param.action == 'my'}">Mes Demandes de Conges</c:when>
                 <c:otherwise>Toutes les Demandes (RH)</c:otherwise>
             </c:choose>
         </h5>
@@ -78,6 +78,7 @@
     <div class="modal-dialog">
         <form action="${pageContext.request.contextPath}/conge" method="post" class="modal-content">
             <input type="hidden" name="action" value="request">
+            <input type="hidden" name="employeId" value="${sessionScope.employeId}" />
             <div class="modal-header">
                 <h5 class="modal-title">Demander un congé</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

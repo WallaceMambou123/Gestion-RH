@@ -1,5 +1,6 @@
 package com.example.gestionrh.service;
 
+import com.example.gestionrh.model.Conge;
 import com.example.gestionrh.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
@@ -28,8 +29,11 @@ public class StatistiqueService {
             // (SUM(jours_conge_maladie) / jours_ouvrés) * 100
             // Pour le TP, on simule jours_ouvrés = nb_employes * 20 jours
             Long maldieDays = em.createQuery(
-                "SELECT SUM(c.nbJours) FROM Conge c WHERE c.typeConge = com.example.gestionrh.model.Conge.TypeConge.MALADIE AND c.statut = com.example.gestionrh.model.Conge.StatutConge.APPROUVE", 
-                Long.class).getSingleResult();
+                            "SELECT SUM(c.nbJours) FROM Conge c WHERE c.typeConge = :type AND c.statut = :statut",
+                            Long.class)
+                    .setParameter("type", Conge.TypeConge.MALADIE)
+                    .setParameter("statut", Conge.StatutConge.APPROUVE)
+                    .getSingleResult();
             
             Long totalEmployes = em.createQuery("SELECT COUNT(e) FROM Employe e", Long.class).getSingleResult();
             

@@ -6,12 +6,24 @@
     <persistence-unit name="gestionRH-PU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <non-jta-data-source>java:/comp/env/jdbc/gestionRHDB</non-jta-data-source>
-        
+
+        <!-- Déclaration explicite de toutes les entités -->
+        <class>com.example.gestionrh.model.Utilisateur</class>
+        <class>com.example.gestionrh.model.Departement</class>
+        <class>com.example.gestionrh.model.Employe</class>
+        <class>com.example.gestionrh.model.ContratEmploye</class>
+        <class>com.example.gestionrh.model.Conge</class>
+        <class>com.example.gestionrh.model.FichePaie</class>
+
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.format_sql" value="false"/>
+            <property name="hibernate.connection.characterEncoding" value="UTF-8"/>
+            <property name="hibernate.connection.useUnicode" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

@@ -3,19 +3,39 @@ package com.example.gestionrh.repository;
 import com.example.gestionrh.model.Departement;
 import com.example.gestionrh.util.JPAUtil;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import java.util.List;
+import java.util.Optional;
 
 public class DepartementRepository {
 
     public List<Departement> findAll() {
         try (EntityManager em = JPAUtil.getEntityManager()) {
-            return em.createQuery("SELECT d FROM Departement d", Departement.class).getResultList();
+            return em.createQuery("SELECT d FROM Departement d ORDER BY d.nom", Departement.class).getResultList();
         }
     }
 
     public Departement findById(Long id) {
         try (EntityManager em = JPAUtil.getEntityManager()) {
             return em.find(Departement.class, id);
+        }
+    }
+
+    public Optional<Departement> findByNom(String nom) {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            Departement d = em.createQuery(
+                "SELECT d FROM Departement d WHERE d.nom = :nom", Departement.class)
+                .setParameter("nom", nom)
+                .getSingleResult();
+            return Optional.of(d);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }
+
+    public long count() {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            return em.createQuery("SELECT COUNT(d) FROM Departement d", Long.class).getSingleResult();
         }
     }
 

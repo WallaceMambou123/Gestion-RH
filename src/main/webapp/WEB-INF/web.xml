@@ -7,26 +7,40 @@
 
     <display-name>Gestion-RH</display-name>
 
-    <!-- Configuration de l'encodage -->
+    <!-- Encodage UTF-8 -->
     <request-character-encoding>UTF-8</request-character-encoding>
     <response-character-encoding>UTF-8</response-character-encoding>
 
+    <!-- Servlets Mappings (Explicit) - Moved to Annotations -->
+
+
+    <!-- Filtres - Moved to Annotations -->
+
+
+    <!-- Page d'accueil -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
     <!-- Pages d'erreur personnalisées -->
     <error-page>
-        <error-code>404</error-code>
-        <location>/WEB-INF/views/error/404.jsp</location>
-    </error-page>
-    <error-page>
         <error-code>403</error-code>
         <location>/WEB-INF/views/error/403.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/error/404.jsp</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
         <location>/WEB-INF/views/error/500.jsp</location>
     </error-page>
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
 
 </web-app>

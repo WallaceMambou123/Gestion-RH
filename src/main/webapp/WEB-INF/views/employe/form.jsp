@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <jsp:include page="/WEB-INF/views/layout/header.jsp">
     <jsp:param name="title" value="${not empty employe ? 'Modifier Employé' : 'Nouvel Employé'}" />
 </jsp:include>
@@ -60,10 +63,15 @@
                                 <select name="departementId" class="form-select" required>
                                     <option value="">Sélectionner...</option>
                                     <c:forEach var="d" items="${departements}">
-                                        <option value="${d.id}" ${employe.departement.id == d.id ? 'selected' : ''}>${d.nom}</option>
+                                        <option value="${d.id}" ${not empty employe.departement and employe.departement.id == d.id ? 'selected' : ''}>
+                                            <c:out value="${d.nom}"/>
+                                        </option>
                                     </c:forEach>
                                 </select>
+                                <%-- Petite note de contrôle pour confirmer visuellement la réception --%>
+                                <small class="text-muted d-block mt-1">Départements disponibles : ${departements.size()}</small>
                             </div>
+                            
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Type de Contrat</label>
                                 <select name="typeContrat" class="form-select" required>

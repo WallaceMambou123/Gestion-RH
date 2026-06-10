@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.example.gestionrh.model.Utilisateur;
 import com.example.gestionrh.service.AuthService;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 

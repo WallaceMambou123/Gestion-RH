@@ -13,19 +13,19 @@ public class EmployeRepository {
     public List<Employe> findAll() {
         try (EntityManager em = JPAUtil.getEntityManager()) {
             return em.createQuery(
-                "SELECT e FROM Employe e JOIN FETCH e.departement ORDER BY e.nom",
-                Employe.class).getResultList();
+                    "SELECT e FROM Employe e LEFT JOIN FETCH e.departement ORDER BY e.nom",
+                    Employe.class).getResultList();
         }
     }
 
     public List<Employe> findAllPaginated(int page, int size) {
         try (EntityManager em = JPAUtil.getEntityManager()) {
             return em.createQuery(
-                "SELECT e FROM Employe e JOIN FETCH e.departement ORDER BY e.nom",
-                Employe.class)
-                .setFirstResult((page - 1) * size)
-                .setMaxResults(size)
-                .getResultList();
+                            "SELECT e FROM Employe e LEFT JOIN FETCH e.departement ORDER BY e.nom",
+                            Employe.class)
+                    .setFirstResult((page - 1) * size)
+                    .setMaxResults(size)
+                    .getResultList();
         }
     }
 

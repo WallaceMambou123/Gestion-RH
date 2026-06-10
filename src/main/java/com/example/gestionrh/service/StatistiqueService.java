@@ -20,8 +20,7 @@ public class StatistiqueService {
     public Map<String, BigDecimal> getMasseSalarialeParDepartement() {
         try (EntityManager em = JPAUtil.getEntityManager()) {
             List<Object[]> results = em.createQuery(
-                "SELECT d.nom, SUM(f.salaireNet) FROM FichePaie f " +
-                "JOIN f.employe e JOIN e.departement d GROUP BY d.nom ORDER BY d.nom",
+                "SELECT d.nom, SUM(e.salaireBase) FROM Employe e JOIN e.departement d GROUP BY d.nom ORDER BY d.nom",
                 Object[].class).getResultList();
             Map<String, BigDecimal> stats = new HashMap<>();
             for (Object[] res : results) {
@@ -72,7 +71,7 @@ public class StatistiqueService {
     public Map<String, Long> getRepartitionParDepartement() {
         try (EntityManager em = JPAUtil.getEntityManager()) {
             List<Object[]> results = em.createQuery(
-                "SELECT d.nom, COUNT(e) FROM Employe e JOIN e.departement d GROUP BY d.nom ORDER BY d.nom",
+                "SELECT d.nom, COUNT(e) FROM Departement d LEFT JOIN d.employes e GROUP BY d.nom ORDER BY d.nom",
                 Object[].class).getResultList();
             Map<String, Long> stats = new HashMap<>();
             for (Object[] res : results) {

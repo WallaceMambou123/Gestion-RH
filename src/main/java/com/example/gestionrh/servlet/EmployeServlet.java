@@ -34,8 +34,12 @@ public class EmployeServlet extends HttpServlet {
         String role   = user.getRole().name();
 
         if ("new".equals(action) || "formulaire".equals(action)) {
-            if (!role.equals("RH")) { response.sendRedirect(request.getContextPath() + "/403"); return; }
-            request.setAttribute("departements", departementRepository.findAll());
+            if (!"RH".equals(role)) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                return;
+            }
+            List<Departement> depts = departementRepository.findAll();
+            request.setAttribute("departements", depts);
             request.getRequestDispatcher("/WEB-INF/views/employe/form.jsp").forward(request, response);
 
         } else if ("edit".equals(action)) {
@@ -144,12 +148,17 @@ public class EmployeServlet extends HttpServlet {
             }
 
             employeService.save(builder.build());
+
+            // Redirection Post-Redirect-Get propre
             response.sendRedirect(request.getContextPath() + "/employe?success=sauvegarde");
 
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", "Erreur : " + e.getMessage());
+            // Réinjection des données indispensables pour ré-afficher le formulaire en cas de plantage
+            request.setAttribute("error", "Erreur lors de la sauvegarde : " + e.getMessage());
             request.setAttribute("departements", departementRepository.findAll());
+
+            // Optionnel : reconstruire un objet temporaire à renvoyer à la vue pour ne pas vider les inputs
             request.getRequestDispatcher("/WEB-INF/views/employe/form.jsp").forward(request, response);
         }
     }

@@ -29,7 +29,7 @@ public class DepartementServlet extends HttpServlet {
         String role = (session != null) ? (String) session.getAttribute("role") : null;
         
         if (role == null || !role.equals("RH")) {
-            response.sendRedirect(request.getContextPath() + "/WEB-INF/views/error/403.jsp"); 
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
 
@@ -82,7 +82,7 @@ public class DepartementServlet extends HttpServlet {
         String role = (session != null) ? (String) session.getAttribute("role") : null;
         
         if (role == null || !role.equals("RH")) {
-            response.sendRedirect(request.getContextPath() + "/WEB-INF/views/error/403.jsp"); 
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
 

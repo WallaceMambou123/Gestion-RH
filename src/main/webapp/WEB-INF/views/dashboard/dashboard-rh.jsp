@@ -61,35 +61,55 @@
 
         <div class="row g-4 mb-4">
             <%-- Graphique masse salariale par département --%>
-            <div class="col-lg-7">
-                <div class="card p-4">
-                    <h6 class="fw-bold mb-4">Masse Salariale par Département</h6>
-                    <canvas id="payrollChart" height="220"></canvas>
+            <div class="col-lg-8">
+                <div class="card p-4 h-100">
+                    <h6 class="fw-bold mb-4">Masse Salariale par Département (Somme des salaires de base)</h6>
+                    <div style="height: 300px;">
+                        <canvas id="payrollChart"></canvas>
+                    </div>
                 </div>
             </div>
             <%-- Actions rapides --%>
-            <div class="col-lg-5">
-                <div class="card p-4">
+            <div class="col-lg-4">
+                <div class="card p-4 h-100">
                     <h6 class="fw-bold mb-4">Actions Rapides</h6>
                     <div class="d-grid gap-2">
-                        <a href="${pageContext.request.contextPath}/employe?action=new" class="btn btn-outline-primary text-start">
+                        <a href="${pageContext.request.contextPath}/employe?action=new" class="btn btn-outline-primary text-start p-3">
                             <i class="fa-solid fa-user-plus me-2"></i>Ajouter un employé
                         </a>
-                        <a href="${pageContext.request.contextPath}/conge" class="btn btn-outline-primary text-start">
+                        <a href="${pageContext.request.contextPath}/conge" class="btn btn-outline-primary text-start p-3">
                             <i class="fa-solid fa-calendar-check me-2"></i>Gérer les congés
                             <c:if test="${congesEnAttente > 0}">
                                 <span class="badge bg-warning text-dark ms-1">${congesEnAttente}</span>
                             </c:if>
                         </a>
-                        <a href="${pageContext.request.contextPath}/paie?action=formulaire" class="btn btn-outline-primary text-start">
+                        <a href="${pageContext.request.contextPath}/paie?action=formulaire" class="btn btn-outline-primary text-start p-3">
                             <i class="fa-solid fa-money-bill-transfer me-2"></i>Générer la paie
                         </a>
-                        <a href="${pageContext.request.contextPath}/stats" class="btn btn-outline-secondary text-start">
+                        <a href="${pageContext.request.contextPath}/stats" class="btn btn-outline-secondary text-start p-3">
                             <i class="fa-solid fa-chart-bar me-2"></i>Statistiques RH
                         </a>
-                        <a href="${pageContext.request.contextPath}/export?type=employes" class="btn btn-outline-secondary text-start">
-                            <i class="fa-solid fa-file-csv me-2"></i>Export CSV Employés
-                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <%-- Répartition par département --%>
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <h6 class="fw-bold mb-4">Répartition des Effectifs par Département</h6>
+                    <div style="height: 250px;">
+                        <canvas id="deptChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <%-- Répartition par contrat --%>
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <h6 class="fw-bold mb-4">Distribution des Types de Contrat</h6>
+                    <div style="height: 250px;">
+                        <canvas id="contractChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -151,7 +171,16 @@
 const deptLabels = [<c:forEach var="entry" items="${masseSalariale}" varStatus="s">'${entry.key}'<c:if test="${!s.last}">,</c:if></c:forEach>];
 const deptData   = [<c:forEach var="entry" items="${masseSalariale}" varStatus="s">${entry.value}<c:if test="${!s.last}">,</c:if></c:forEach>];
 
+const labelsRepartition = [<c:forEach var="entry" items="${repartitionDepts}" varStatus="s">'${entry.key}'<c:if test="${!s.last}">,</c:if></c:forEach>];
+const dataRepartition   = [<c:forEach var="entry" items="${repartitionDepts}" varStatus="s">${entry.value}<c:if test="${!s.last}">,</c:if></c:forEach>];
+
+const labelsContrats = [<c:forEach var="entry" items="${repartitionContrats}" varStatus="s">'${entry.key}'<c:if test="${!s.last}">,</c:if></c:forEach>];
+const dataContrats   = [<c:forEach var="entry" items="${repartitionContrats}" varStatus="s">${entry.value}<c:if test="${!s.last}">,</c:if></c:forEach>];
+
+const chartColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+
 document.addEventListener("DOMContentLoaded", function() {
+    // 1. Payroll Chart (Bar)
     if (document.getElementById('payrollChart')) {
         new Chart(document.getElementById('payrollChart').getContext('2d'), {
             type: 'bar',
@@ -166,8 +195,49 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    // 2. Department Effectif Chart (Doughnut)
+    if (document.getElementById('deptChart')) {
+        new Chart(document.getElementById('deptChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: labelsRepartition,
+                datasets: [{
+                    data: dataRepartition,
+                    backgroundColor: chartColors,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'right' } }
+            }
+        });
+    }
+
+    // 3. Contract Distribution Chart (Pie)
+    if (document.getElementById('contractChart')) {
+        new Chart(document.getElementById('contractChart').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: labelsContrats,
+                datasets: [{
+                    data: dataContrats,
+                    backgroundColor: chartColors,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'right' } }
             }
         });
     }

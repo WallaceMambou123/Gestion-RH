@@ -168,21 +168,22 @@
 </main>
 
 <script>
-const deptLabels = [<c:forEach var="entry" items="${masseSalariale}" varStatus="s">'${entry.key}'<c:if test="${!s.last}">,</c:if></c:forEach>];
+const deptLabels = [<c:forEach var="entry" items="${masseSalariale}" varStatus="s">"${entry.key}"<c:if test="${!s.last}">,</c:if></c:forEach>];
 const deptData   = [<c:forEach var="entry" items="${masseSalariale}" varStatus="s">${entry.value}<c:if test="${!s.last}">,</c:if></c:forEach>];
 
-const labelsRepartition = [<c:forEach var="entry" items="${repartitionDepts}" varStatus="s">'${entry.key}'<c:if test="${!s.last}">,</c:if></c:forEach>];
+const labelsRepartition = [<c:forEach var="entry" items="${repartitionDepts}" varStatus="s">"${entry.key}"<c:if test="${!s.last}">,</c:if></c:forEach>];
 const dataRepartition   = [<c:forEach var="entry" items="${repartitionDepts}" varStatus="s">${entry.value}<c:if test="${!s.last}">,</c:if></c:forEach>];
 
-const labelsContrats = [<c:forEach var="entry" items="${repartitionContrats}" varStatus="s">'${entry.key}'<c:if test="${!s.last}">,</c:if></c:forEach>];
+const labelsContrats = [<c:forEach var="entry" items="${repartitionContrats}" varStatus="s">"${entry.key}"<c:if test="${!s.last}">,</c:if></c:forEach>];
 const dataContrats   = [<c:forEach var="entry" items="${repartitionContrats}" varStatus="s">${entry.value}<c:if test="${!s.last}">,</c:if></c:forEach>];
 
 const chartColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
 
 document.addEventListener("DOMContentLoaded", function() {
     // 1. Payroll Chart (Bar)
-    if (document.getElementById('payrollChart')) {
-        new Chart(document.getElementById('payrollChart').getContext('2d'), {
+    const payrollCtx = document.getElementById('payrollChart');
+    if (payrollCtx) {
+        new Chart(payrollCtx.getContext('2d'), {
             type: 'bar',
             data: {
                 labels: deptLabels,
@@ -203,8 +204,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 2. Department Effectif Chart (Doughnut)
-    if (document.getElementById('deptChart')) {
-        new Chart(document.getElementById('deptChart').getContext('2d'), {
+    const deptCtx = document.getElementById('deptChart');
+    if (deptCtx) {
+        new Chart(deptCtx.getContext('2d'), {
             type: 'doughnut',
             data: {
                 labels: labelsRepartition,
@@ -223,8 +225,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 3. Contract Distribution Chart (Pie)
-    if (document.getElementById('contractChart')) {
-        new Chart(document.getElementById('contractChart').getContext('2d'), {
+    const contractCtx = document.getElementById('contractChart');
+    if (contractCtx) {
+        new Chart(contractCtx.getContext('2d'), {
             type: 'pie',
             data: {
                 labels: labelsContrats,

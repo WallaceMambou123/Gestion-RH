@@ -67,6 +67,12 @@
       <a href="${pageContext.request.contextPath}/stats" class="nav-item ${page == 'stats' ? 'active' : ''}">
         <i class="fa-solid fa-square-poll-vertical"></i> Statistiques
       </a>
+      <a href="${pageContext.request.contextPath}/validation" class="nav-item ${page == 'validation' ? 'active' : ''}">
+          <i class="fa-solid fa-user-check"></i> Validation
+          <c:if test="${nbComptesAttente > 0}">
+              <span class="nav-badge bg-danger">${nbComptesAttente}</span>
+          </c:if>
+      </a>
       <a href="${pageContext.request.contextPath}/export?type=employes" class="nav-item">
         <i class="fa-solid fa-file-export"></i> Exports
       </a>

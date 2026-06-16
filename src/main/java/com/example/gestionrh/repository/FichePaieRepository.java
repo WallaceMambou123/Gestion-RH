@@ -12,6 +12,12 @@ import java.util.Optional;
 
 public class FichePaieRepository {
 
+    public FichePaie findById(Long id) {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            return em.find(FichePaie.class, id);
+        }
+    }
+
     public List<FichePaie> findByEmploye(Long employeId) {
         try (EntityManager em = JPAUtil.getEntityManager()) {
             return em.createQuery(

@@ -18,6 +18,7 @@ public class DashboardServlet extends HttpServlet {
     private final StatistiqueService statistiqueService = new StatistiqueService();
     private final CongeService congeService = new CongeService();
     private final EmployeRepository employeRepository = new EmployeRepository();
+    private final com.example.gestionrh.repository.UtilisateurRepository utilisateurRepository = new com.example.gestionrh.repository.UtilisateurRepository();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

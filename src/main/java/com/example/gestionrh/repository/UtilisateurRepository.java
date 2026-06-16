@@ -67,6 +67,12 @@ public class UtilisateurRepository {
             return count != null && count > 0;
         }
     }
+    public long countPending() {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            return em.createQuery("SELECT COUNT(u) FROM Utilisateur u WHERE u.actif = false", Long.class)
+                    .getSingleResult();
+        }
+    }
 
     public void save(Utilisateur utilisateur) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -77,6 +83,20 @@ public class UtilisateurRepository {
             } else {
                 em.merge(utilisateur);
             }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+    public void delete(Long id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Utilisateur user = em.find(Utilisateur.class, id);
+            if (user != null) em.remove(user);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();

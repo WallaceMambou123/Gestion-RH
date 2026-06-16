@@ -65,9 +65,11 @@ public class ExportServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             // UTF-8 BOM for Excel
             out.write('\ufeff');
-            out.println("Matricule,Nom,Prenom,Poste,Département,Type Contrat,Date Embauche,Salaire Base,Email");
+            // Explicitly tell Excel the separator is a semicolon
+            out.println("sep=;");
+            out.println("Matricule;Nom;Prenom;Poste;Departement;Type Contrat;Date Embauche;Salaire Base;Email");
             for (Employe e : list) {
-                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+                out.printf("%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
                     e.getMatricule(), e.getNom(), e.getPrenom(), e.getPoste(),
                     (e.getDepartement() != null ? e.getDepartement().getNom() : ""),
                     e.getTypeContrat(), e.getDateEmbauche(), e.getSalaireBase(), e.getEmail());
@@ -79,9 +81,10 @@ public class ExportServlet extends HttpServlet {
             
             PrintWriter out = response.getWriter();
             out.write('\ufeff');
-            out.println("ID,Employé,Type,Début,Fin,Jours,Statut");
+            out.println("sep=;");
+            out.println("ID;Employé;Type;Début;Fin;Jours;Statut");
             for (Conge c : conges) {
-                out.printf("%d,%s %s,%s,%s,%s,%d,%s\n",
+                out.printf("%d;%s %s;%s;%s;%s;%d;%s\n",
                     c.getId(), c.getEmploye().getNom(), c.getEmploye().getPrenom(),
                     c.getTypeConge(), c.getDateDebut(), c.getDateFin(),
                     c.getNbJours(), c.getStatut());
@@ -96,9 +99,10 @@ public class ExportServlet extends HttpServlet {
             
             PrintWriter out = response.getWriter();
             out.write('\ufeff');
-            out.println("Employé,Mois,Base,Heures Sup,Primes,Retenues,Brut,Net");
+            out.println("sep=;");
+            out.println("Employé;Mois;Base;Heures Sup;Primes;Retenues;Brut;Net");
             for (FichePaie fp : fiches) {
-                out.printf("%s %s,%s,%.0f,%.0f,%.0f,%.0f,%.0f,%.0f\n",
+                out.printf("%s %s;%s;%.0f;%.0f;%.0f;%.0f;%.0f;%.0f\n",
                     fp.getEmploye().getPrenom(), fp.getEmploye().getNom(),
                     fp.getMois(), fp.getSalaireBase(), fp.getHeuresSup(),
                     fp.getPrimes(), fp.getRetenues(), fp.getSalaireBrut(), fp.getSalaireNet());

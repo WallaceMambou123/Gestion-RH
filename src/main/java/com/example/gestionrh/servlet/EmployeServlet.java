@@ -60,7 +60,9 @@ public class EmployeServlet extends HttpServlet {
             }
             String csv = employeService.exportToCSV(employes);
             response.setContentType("text/csv; charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
             response.setHeader("Content-Disposition", "attachment; filename=employes.csv");
+            response.getWriter().write('\ufeff');
             response.getWriter().write(csv);
 
         } else {

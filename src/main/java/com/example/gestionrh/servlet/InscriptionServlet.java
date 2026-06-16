@@ -40,11 +40,16 @@ public class InscriptionServlet extends HttpServlet {
                     .email(email)
                     .password(mdp)
                     .role(Utilisateur.Role.valueOf(roleStr))
-                    .actif(true)
+                    .actif(false) // Dossier en attente de validation RH
                     .build();
 
             authService.register(newUser);
-            response.sendRedirect(request.getContextPath() + "/connexion?registered=1");
+
+            if (newUser.getRole() == Utilisateur.Role.MANAGER) {
+                request.getRequestDispatcher("/WEB-INF/views/attente-validation.jsp").forward(request, response);
+            } else {
+                response.sendRedirect(request.getContextPath() + "/connexion?registered=1&pending=true");
+            }
         } catch (Exception e) {
             request.setAttribute("error", "Erreur lors de l'inscription : " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/InscriptionPage.jsp").forward(request, response);

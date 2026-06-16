@@ -161,60 +161,70 @@
     </c:if>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-    const contratsLabels = [<c:forEach var="entry" items="${repartitionContrats}" varStatus="s">'${entry.key}'<c:if test="${!s.last}">,</c:if></c:forEach>];
+    console.log("Stats Data:", { 
+        contrats: contratsData, 
+        depts: deptsData 
+    });
+    const contratsLabels = [<c:forEach var="entry" items="${repartitionContrats}" varStatus="s">"${entry.key}"<c:if test="${!s.last}">,</c:if></c:forEach>];
     const contratsData   = [<c:forEach var="entry" items="${repartitionContrats}" varStatus="s">${entry.value}<c:if test="${!s.last}">,</c:if></c:forEach>];
 
-    const deptsLabels = [<c:forEach var="entry" items="${repartitionDepts}" varStatus="s">'${entry.key}'<c:if test="${!s.last}">,</c:if></c:forEach>];
+    const deptsLabels = [<c:forEach var="entry" items="${repartitionDepts}" varStatus="s">"${entry.key}"<c:if test="${!s.last}">,</c:if></c:forEach>];
     const deptsData   = [<c:forEach var="entry" items="${repartitionDepts}" varStatus="s">${entry.value}<c:if test="${!s.last}">,</c:if></c:forEach>];
 
     const COLORS = ['#206bc4', '#4299e1', '#b9e3f9', '#f76707', '#ff922b', '#fab005'];
 
     document.addEventListener("DOMContentLoaded", function() {
         // Doughnut Chart
-        new Chart(document.getElementById('contratsChart').getContext('2d'), {
-            type: 'doughnut',
-            data: {
-                labels: contratsLabels,
-                datasets: [{ 
-                    data: contratsData, 
-                    backgroundColor: COLORS,
-                    hoverOffset: 4,
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }
+        const contratsCtx = document.getElementById('contratsChart');
+        if (contratsCtx) {
+            new Chart(contratsCtx.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: contratsLabels,
+                    datasets: [{ 
+                        data: contratsData, 
+                        backgroundColor: COLORS,
+                        hoverOffset: 4,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }
+                    }
                 }
-            }
-        });
+            });
+        }
 
         // Bar Chart
-        new Chart(document.getElementById('deptsChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: deptsLabels,
-                datasets: [{ 
-                    label: 'Collaborateurs', 
-                    data: deptsData, 
-                    backgroundColor: '#206bc4',
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true, grid: { display: false }, ticks: { stepSize: 1 } },
-                    x: { grid: { display: false } }
+        const deptsCtx = document.getElementById('deptsChart');
+        if (deptsCtx) {
+            new Chart(deptsCtx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: deptsLabels,
+                    datasets: [{ 
+                        label: 'Collaborateurs', 
+                        data: deptsData, 
+                        backgroundColor: '#206bc4',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false }, ticks: { stepSize: 1 } },
+                        x: { grid: { display: false } }
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 </script>
 

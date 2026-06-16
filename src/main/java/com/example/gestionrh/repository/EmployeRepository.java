@@ -64,6 +64,19 @@ public class EmployeRepository {
         }
     }
 
+    public Optional<Employe> findByEmail(String email) {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            Employe e = em.createQuery(
+                "SELECT e FROM Employe e WHERE e.email = :email",
+                Employe.class)
+                .setParameter("email", email)
+                .getSingleResult();
+            return Optional.of(e);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }
+
     public Employe findById(Long id) {
         try (EntityManager em = JPAUtil.getEntityManager()) {
             return em.find(Employe.class, id);

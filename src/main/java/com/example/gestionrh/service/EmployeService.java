@@ -50,6 +50,7 @@ public class EmployeService {
 
     public String exportToCSV(List<Employe> employes) {
         StringBuilder csv = new StringBuilder();
+        csv.append("sep=;\n");
         csv.append("ID;Matricule;Nom;Prenom;Poste;Departement;Email;Telephone;Type Contrat;Salaire Base\n");
         for (Employe e : employes) {
             String dept = (e.getDepartement() != null) ? e.getDepartement().getNom() : "";

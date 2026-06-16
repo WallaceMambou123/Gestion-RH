@@ -42,17 +42,20 @@ public class FichePaieServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/views/paie/form.jsp").forward(request, response);
 
         } else if ("pdf".equals(action)) {
-            Long employeId = Long.parseLong(request.getParameter("employeId"));
-            String mois    = request.getParameter("mois");
-            Optional<FichePaie> fpOpt = fichePaieRepository.findByEmployeAndMois(employeId, mois);
-            if (fpOpt.isPresent()) {
-                byte[] pdf = paieService.genererFichePaiePDF(fpOpt.get());
-                response.setContentType("application/pdf");
-                response.setHeader("Content-Disposition", "attachment; filename=FichePaie_" + mois + ".pdf");
-                response.getOutputStream().write(pdf);
-            } else {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Fiche de paie introuvable.");
+            String idStr = request.getParameter("id");
+            if (idStr != null) {
+                Long id = Long.parseLong(idStr);
+                FichePaie fp = fichePaieRepository.findById(id);
+                if (fp != null) {
+                    byte[] pdf = paieService.genererFichePaiePDF(fp);
+                    response.setContentType("application/pdf");
+                    response.setHeader("Content-Disposition", "attachment; filename=Bulletin_" + fp.getMois() + "_" + fp.getEmploye().getNom() + ".pdf");
+                    response.getOutputStream().write(pdf);
+                    return;
+                }
             }
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Fiche de paie introuvable.");
+            return;
 
         } else if ("my".equals(action)) {
             // Employé consulte ses propres fiches

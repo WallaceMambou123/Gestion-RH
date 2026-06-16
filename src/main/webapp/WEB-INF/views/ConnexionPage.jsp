@@ -65,7 +65,13 @@
     <% if ("1".equals(request.getParameter("registered"))) { %>
     <div class="alert alert-success">
       <i class="ti ti-circle-check"></i>
-      <span>Compte créé avec succès. Connectez-vous !</span>
+      <span>
+        <% if ("true".equals(request.getParameter("pending"))) { %>
+          Inscription réussie ! Votre compte est en attente de validation par le RH.
+        <% } else { %>
+          Compte créé avec succès. Connectez-vous !
+        <% } %>
+      </span>
     </div>
     <% } %>
 

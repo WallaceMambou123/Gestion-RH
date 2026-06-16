@@ -24,5 +24,12 @@ public class AuthService {
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         user.setPassword(hashedPassword);
         utilisateurRepository.save(user);
+
+        // LIAISON AUTO : Si un employé existe avec cet email, on le lie au compte
+        com.example.gestionrh.repository.EmployeRepository empRepo = new com.example.gestionrh.repository.EmployeRepository();
+        empRepo.findByEmail(user.getEmail()).ifPresent(emp -> {
+            emp.setUtilisateur(user);
+            empRepo.save(emp);
+        });
     }
 }
